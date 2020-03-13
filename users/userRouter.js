@@ -8,18 +8,18 @@ router.post("/", validateUser, (req, res) => {
   // do your magic!
   Users.insert(req.body)
     .then(user => {
-      res.status(201).json(user);
+      res.status(201).json({ user });
     })
     .catch(error => {
       res.status(500).json({ message: "Error adding the user" });
     });
 });
 
-router.post("/:id/posts", validatePost, (req, res) => {
+router.post("/:id/posts", validateUserId, validatePost, (req, res) => {
   // do your magic!
   Users.insert(req.params.id, req.body)
     .then(user => {
-      res.status(201).json(user);
+      res.status(201).json({ user });
     })
     .catch(error => {
       res.status(500).json({ message: " Couldn't add user post" });
@@ -37,7 +37,7 @@ router.get("/", (req, res) => {
     });
 });
 
-router.get("/:id", validateUserId, (req, res) => {
+router.get("/:id", (req, res) => {
   // do your magic!
   Users.getById(req.params.id)
     .then(user => {
@@ -50,7 +50,7 @@ router.get("/:id", validateUserId, (req, res) => {
 
 router.get("/:id/posts", (req, res) => {
   // do your magic!
-  Users.getUserPosts(req.params.id, req.body)
+  Users.getUserPosts(req.params.id)
     .then(user => {
       res.status(201).json(user);
     })
